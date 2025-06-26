@@ -1,0 +1,42 @@
+[project]
+name = "skip-middle"
+version = "0.1.0"
+description = "Learning to Skip the Middle Layers of Transformers"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "datasets>=3.5.1",
+    "matplotlib>=3.10.3",
+    "muon-optimizer",
+    "numpy>=2.2.3",
+    "pandas>=2.2.3",
+    "simple-parsing>=0.1.7",
+    "tiktoken>=0.9.0",
+    "torch==2.6",
+    "transformers>=4.51.1",
+    "wandb>=0.19.8",
+]
+
+[tool.ruff.lint]
+ignore = ["F722", "F821", "UP037", "E501"]
+select = ["E", "F", "UP", "B", "SIM", "I"]
+unfixable = ["F401"]
+
+[tool.setuptools]
+packages = ["lab", "projects.skip_middle"]
+
+[tool.ty.rules]
+no-matching-overload = "ignore"
+possibly-unbound-attribute = "ignore"
+
+[tool.uv]
+dev-dependencies = ["ruff>=0.11.9", "ty>=0.0.1a2"]
+preview = true
+
+[tool.uv.sources]
+muon-optimizer = { git = "https://github.com/KellerJordan/Muon" }
+torch = { index = "pytorch" }
+
+[[tool.uv.index]]
+name = "pytorch"
+url = "https://download.pytorch.org/whl/cu126"

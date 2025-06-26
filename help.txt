@@ -1,0 +1,156 @@
+usage: train_fineweb.py [-h]
+                        [--gates {dummy,adaptive,proportional,proportional_derivative,sparsity,sparsity_variance,sparsity_variance_l2}]
+                        [--gates_zero_eps float] [--seed int] [--project str]
+                        [--run_id [str]] [--logdir str] [--log_gradients bool]
+                        [--log_params bool] [--log_every_steps int]
+                        [--val_every_steps int] [--save_every_steps int]
+                        [--data.train_files str] [--data.train_tokens [int]]
+                        [--data.val_files str] [--data.val_tokens [int]]
+                        [--data.batch_size int] [--data.device_batch_size int]
+                        [--model.dim int] [--model.n_layers int]
+                        [--model.n_heads int] [--model.n_kv_heads [int]]
+                        [--model.vocab_size int] [--model.multiple_of int]
+                        [--model.ffn_dim_multiplier [float]]
+                        [--model.norm_eps float] [--model.rope_theta float]
+                        [--model.use_scaled_rope bool]
+                        [--model.max_seq_len int]
+                        [--model.initializer_range [float]]
+                        [--model.zero_init_masks bool]
+                        [--optimizer.default.lr float]
+                        [--optimizer.default.beta1 float]
+                        [--optimizer.default.beta2 float]
+                        [--optimizer.default.eps float]
+                        [--optimizer.default.weight_decay float]
+                        [--optimizer.masks.lr float]
+                        [--optimizer.masks.beta1 float]
+                        [--optimizer.masks.beta2 float]
+                        [--optimizer.masks.eps float]
+                        [--optimizer.masks.weight_decay float]
+                        [--optimizer.norms.lr float]
+                        [--optimizer.norms.beta1 float]
+                        [--optimizer.norms.beta2 float]
+                        [--optimizer.norms.eps float]
+                        [--optimizer.norms.weight_decay float]
+                        [--scheduler.warmup_steps float]
+                        [--scheduler.start_factor float]
+
+options:
+  -h, --help            show this help message and exit
+
+FineWebTrainConfig ['config']:
+  FineWebTrainConfig(data: lab.train.data.DataConfig = <factory>, model: projects.skip_middle.model.config.ModelConfig = <factory>, optimizer: projects.skip_middle.model.optimizer.OptimizerConfig = <factory>, scheduler: lab.train.schedulers.LinearCosineSchedulerConfig = <factory>, gates: projects.skip_middle.gate_controller.dummy.DummyGateControllerConfig | projects.skip_middle.gate_controller.adaptive.AdaptiveGateControllerConfig | projects.skip_middle.gate_controller.proportional.ProportionalGateControllerConfig | projects.skip_middle.gate_controller.proportional_derivative.ProportionalDerivativeGateControllerConfig | projects.skip_middle.gate_controller.sparsity.SparsityGateControllerConfig | projects.skip_middle.gate_controller.sparsity_variance.SparsityVarianceGateControllerConfig | projects.skip_middle.gate_controller.sparsity_variance_l2.SparsityVarianceL2GateControllerConfig = <factory>, gates_zero_eps: float = 1e-08, seed: int = 0, project: str = 'skip_middle', run_id: str | None = None, logdir: str = 'logs/skip_middle', log_gradients: bool = False, log_params: bool = False, log_every_steps: int = 1, val_every_steps: int = 100, save_every_steps: int = -1)
+
+  --gates {dummy,adaptive,proportional,proportional_derivative,sparsity,sparsity_variance,sparsity_variance_l2}
+                        (default: dummy)
+  --gates_zero_eps float
+                        (default: 1e-08)
+  --seed int            (default: 0)
+  --project str         (default: skip_middle)
+  --run_id [str]
+  --logdir str          (default: logs/skip_middle)
+  --log_gradients bool, --nolog_gradients bool
+                        (default: False)
+  --log_params bool, --nolog_params bool
+                        (default: False)
+  --log_every_steps int
+                        (default: 1)
+  --val_every_steps int
+                        (default: 100)
+  --save_every_steps int
+                        (default: -1)
+
+DataConfig ['config.data']:
+  DataConfig(train_files: str, train_tokens: int | None, val_files: str, val_tokens: int | None, batch_size: int, device_batch_size: int)
+
+  --data.train_files str
+                        (default: data/fineweb_10B_gpt2/fineweb_train_*.bin)
+  --data.train_tokens [int]
+  --data.val_files str  (default: data/fineweb_10B_gpt2/fineweb_val_*.bin)
+  --data.val_tokens [int]
+  --data.batch_size int
+                        (default: 512)
+  --data.device_batch_size int
+                        (default: 32)
+
+ModelConfig ['config.model']:
+  ModelConfig(**kwargs)
+
+  --model.dim int       (default: 768)
+  --model.n_layers int  (default: 12)
+  --model.n_heads int   (default: 12)
+  --model.n_kv_heads [int]
+                        (default: 12)
+  --model.vocab_size int
+                        (default: 50257)
+  --model.multiple_of int
+                        (default: 256)
+  --model.ffn_dim_multiplier [float]
+                        (default: 4)
+  --model.norm_eps float
+                        (default: 1e-05)
+  --model.rope_theta float
+                        (default: 10000)
+  --model.use_scaled_rope bool, --model.nouse_scaled_rope bool
+                        (default: False)
+  --model.max_seq_len int
+                        (default: 1024)
+  --model.initializer_range [float]
+                        (default: 0.02)
+  --model.zero_init_masks bool, --model.nozero_init_masks bool
+                        (default: True)
+
+OptimizerConfig ['config.optimizer']:
+  OptimizerConfig(default: lab.train.optimizers.AdamWOptimizerConfig, masks: lab.train.optimizers.AdamWOptimizerConfig, norms: lab.train.optimizers.AdamWOptimizerConfig)
+
+AdamWOptimizerConfig ['config.optimizer.default']:
+  AdamWOptimizerConfig(lr: float = 0.001, beta1: float = 0.9, beta2: float = 0.999, eps: float = 1e-08, weight_decay: float = 0.01)
+
+  --optimizer.default.lr float
+                        (default: 0.001)
+  --optimizer.default.beta1 float
+                        (default: 0.8)
+  --optimizer.default.beta2 float
+                        (default: 0.95)
+  --optimizer.default.eps float
+                        (default: 1e-10)
+  --optimizer.default.weight_decay float
+                        (default: 0)
+
+AdamWOptimizerConfig ['config.optimizer.masks']:
+  AdamWOptimizerConfig(lr: float = 0.001, beta1: float = 0.9, beta2: float = 0.999, eps: float = 1e-08, weight_decay: float = 0.01)
+
+  --optimizer.masks.lr float
+                        (default: 0.001)
+  --optimizer.masks.beta1 float
+                        (default: 0.8)
+  --optimizer.masks.beta2 float
+                        (default: 0.95)
+  --optimizer.masks.eps float
+                        (default: 1e-10)
+  --optimizer.masks.weight_decay float
+                        (default: 0)
+
+AdamWOptimizerConfig ['config.optimizer.norms']:
+  AdamWOptimizerConfig(lr: float = 0.001, beta1: float = 0.9, beta2: float = 0.999, eps: float = 1e-08, weight_decay: float = 0.01)
+
+  --optimizer.norms.lr float
+                        (default: 0.001)
+  --optimizer.norms.beta1 float
+                        (default: 0.8)
+  --optimizer.norms.beta2 float
+                        (default: 0.95)
+  --optimizer.norms.eps float
+                        (default: 1e-10)
+  --optimizer.norms.weight_decay float
+                        (default: 0)
+
+LinearCosineSchedulerConfig ['config.scheduler']:
+  LinearCosineSchedulerConfig(warmup_steps: float = 0.1, start_factor: float = 0.1)
+
+  --scheduler.warmup_steps float
+                        (default: 0.1)
+  --scheduler.start_factor float
+                        (default: 0.1)
+
+DummyGateControllerConfig ['config.gates']:
+  DummyGateControllerConfig()
