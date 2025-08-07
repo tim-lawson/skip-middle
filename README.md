@@ -4,7 +4,7 @@
 > This repository accompanies the preprint Learning to Skip the Middle Layers of Transformers (<https://arxiv.org/abs/2506.21103>).
 > For pre-trained models, see [HuggingFace](https://huggingface.co/collections/tim-lawson/learning-to-skip-the-middle-layers-of-transformers-68355e4a9f7a7fa7f01c415f).
 
-We based the underlying Transformer models the reference implementation of Llama 3 (<https://github.com/meta-llama/llama-models/>).
+We based the underlying Transformer models on the reference implementation of Llama 3 (<https://github.com/meta-llama/llama-models/>).
 The key difference relative to Llama 3 is that we used the Sandwich-LN scheme (a.k.a. Peri-LN) instead of Pre-LN.
 The training codebase is based on the 'nanoGPT speedrun' repository (<https://github.com/KellerJordan/modded-nanogpt>).
 
